@@ -1,2 +1,2 @@
 # motleydatetime
-Helper routines to make using, formatting, and converting datetime and timezone objects easier.
+Makes using, formatting, and converting datetime and timezone objects easier and more reliable.

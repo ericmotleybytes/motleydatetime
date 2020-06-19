@@ -5,6 +5,8 @@ import pytz
 import tzlocal
 import datetime
 
+__version__ = '0.1.0'
+
 def is_naive(the_datetime):
     """Tests if a datetime.datetime object is 'naive', i.e., has no associated timezone information.
 
