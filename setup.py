@@ -6,14 +6,18 @@ https://github.com/pypa/sampleproject/blob/master/setup.py
 """
 from setuptools import setup
 from os import path
+import subprocess
 # Get the long description from the README file
 here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
+vers_result = subprocess.run(['python','src/motleydatetime/version.py'], stdout=subprocess.PIPE)
+vers = vers_result.stdout.decode('utf-8').strip(' \t\r\n')
+print('vers=' + vers)
 
 setup(
     name='motleydatetime',
-    version='0.1.1',
+    version=vers,
     packages=['motleydatetime'],
     package_dir={'': 'src'},
     url='https://github.com/ericmotleybytes/motleydatetime',

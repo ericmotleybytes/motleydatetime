@@ -12,6 +12,14 @@ motleydatetime.helpers module
    :undoc-members:
    :show-inheritance:
 
+motleydatetime.version module
+-----------------------------
+
+.. automodule:: motleydatetime.version
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------

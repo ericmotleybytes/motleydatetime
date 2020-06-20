@@ -13,7 +13,8 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../src'))
-print(os.path.abspath('../src'))
+#print(os.path.abspath('../src'))
+import motleydatetime.version
 
 # -- Project information -----------------------------------------------------
 
@@ -22,7 +23,7 @@ copyright = '2020, Eric Christiansen'
 author = 'Eric Christiansen'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1.1'
+release = motleydatetime.version.__version__
 
 # -- General configuration ---------------------------------------------------
 
