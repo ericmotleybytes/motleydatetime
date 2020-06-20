@@ -151,11 +151,12 @@ def get_epoch_from_aware_datetime(aware_datetime):
     dt_epoch = (aware_datetime - base_epoch).total_seconds()   # fractional seconds
     return dt_epoch
 
-def get_utc_datetime_from_epoch(epoch=time.time()):
+def get_utc_datetime_from_epoch(epoch=None):
     """Returns a UTC timezone aware datetime.datetime set from the epoch seconds (including fractions).
 
     Parameters:
         epoch (float) : Number of seconds (including fractions) since system epoch. Can also be an int.
+            If not specified (None) then time.time(), the current system time epoch, is used.
 
     Returns:
         datetime.datetime : An aware datetime.datetime object associated with timezone UTC and with the
@@ -164,18 +165,22 @@ def get_utc_datetime_from_epoch(epoch=time.time()):
     Raises:
         TypeError : Raised if any parameters not of an acceptable type.
     """
+    if epoch is None:
+        epoch = time.time()
     if not isinstance(epoch,int) and not isinstance(epoch,float):
         raise TypeError("Epoch parameter is not an int or a float.")
     aware_dt = datetime.datetime.fromtimestamp(epoch,pytz.utc)
     return aware_dt
 
-def get_aware_datetime_from_epoch(epoch=time.time(),timezone=tzlocal.get_localzone()):
+def get_aware_datetime_from_epoch(epoch=None,timezone=None):
     """Returns a datetime.datetime set from the epoch seconds and aware of specified timezone.
 
     Parameters:
         epoch (float) : Number of seconds (including fractions) since system epoch. Can also be an int.
+            If not specified (or None) the current system epoch (time.time()) is used.
         timezone (str or datetime.tzinfo) : Either a valid timezone name as a string, or a timezone object,
             usually a pytz.timezone object, which is a subclass of datetime.tzinfo.
+            If not specified (or None) the default timezone (tzlocal.get_localzone()) is used.
 
     Returns:
         datetime.datetime : An aware datetime.datetime object associated with specified timezone and with the
@@ -184,6 +189,10 @@ def get_aware_datetime_from_epoch(epoch=time.time(),timezone=tzlocal.get_localzo
     Raises:
         TypeError : Raised if any parameters not of an acceptable type.
     """
+    if epoch is None:
+        epoch = time.time()
+    if timezone is None:
+        timezone = tzlocal.get_localzone()
     if not isinstance(epoch,int) and not isinstance(epoch,float):
         raise RuntimeError("Epoch parameter is an int or a float.")
     if timezone.__class__.__name__ == "str":
@@ -193,7 +202,7 @@ def get_aware_datetime_from_epoch(epoch=time.time(),timezone=tzlocal.get_localzo
     aware_dt = datetime.datetime.fromtimestamp(epoch,timezone)
     return aware_dt
 
-def get_aware_datetime_from_naive(naive_datetime,timezone=tzlocal.get_localzone()):
+def get_aware_datetime_from_naive(naive_datetime,timezone=None):
     """Returns a localized (made timezone aware) datetime.datetime but does not convert any date or time values.
 
     Parameters:
@@ -201,14 +210,17 @@ def get_aware_datetime_from_naive(naive_datetime,timezone=tzlocal.get_localzone(
             any timezone).
         timezone (str or datetime.tzinfo) : Either a valid timezone name as a string, or a timezone object,
             usually a pytz.timezone object, which is a subclass of datetime.tzinfo.
+            If not specified (or None) the default timezone (tzlocal.get_localzone()) is used.
 
     Returns:
-        datetime.datetime : A datetime.datetime object aware of the specified timezone.
+        datetime.datetime : A datetime.datetime object aware of a specific timezone.
 
     Raises:
         TypeError : Raised if any parameters not of an acceptable type.
         RunTimeError : Raised if naive_datetime parameter not naive but is rather timezone aware.
     """
+    if timezone is None:
+        timezone = tzlocal.get_localzone()
     # Localized naive datetime, but no timezone conversion performed.
     if is_aware(naive_datetime):
         raise RuntimeError("Naive datetime parameter is not naive.")
@@ -219,12 +231,13 @@ def get_aware_datetime_from_naive(naive_datetime,timezone=tzlocal.get_localzone(
     aware_dt = timezone.localize(naive_datetime)
     return aware_dt
 
-def get_now_aware_datetime(timezone=tzlocal.get_localzone()):
+def get_now_aware_datetime(timezone=None):
     """Returns a timezone aware datetime of the current date and time in the specified timezone.
 
     Parameters:
         timezone (str or datetime.tzinfo) : Either a valid timezone name as a string, or a timezone object,
-        usually a pytz.timezone object, which is a subclass of datetime.tzinfo.
+            usually a pytz.timezone object, which is a subclass of datetime.tzinfo.
+            If not specified (or None) the default timezone (tzlocal.get_localzone()) is used.
 
     Returns:
         datetime.datetime : A datetime.datetime object with current datetime in the specified timezone.
@@ -232,6 +245,8 @@ def get_now_aware_datetime(timezone=tzlocal.get_localzone()):
     Raises:
         TypeError : Raised if any parameters not of an acceptable type.
     """
+    if timezone is None:
+        timezone = tzlocal.get_localzone()
     if timezone.__class__.__name__ == "str":
         timezone = pytz.timezone(timezone)
     elif not isinstance(timezone,datetime.tzinfo):
@@ -240,13 +255,14 @@ def get_now_aware_datetime(timezone=tzlocal.get_localzone()):
     aware_dt = datetime.datetime.fromtimestamp(epoch,timezone)
     return aware_dt
 
-def convert_aware_datetime(old_aware_datetime,timezone=tzlocal.get_localzone()):
+def convert_aware_datetime(old_aware_datetime,timezone=None):
     """Converts a timezone aware datetime into another datetime aware of another timezone.
 
     Parameters:
         old_aware_datetime (datetime.datetime) : A timezone aware datetime.
-    timezone (str or datetime.tzinfo) : Either a valid timezone name as a string, or a timezone object,
-        usually a pytz.timezone object, which is a subclass of datetime.tzinfo.
+        timezone (str or datetime.tzinfo) : Either a valid timezone name as a string, or a timezone object,
+            usually a pytz.timezone object, which is a subclass of datetime.tzinfo.
+            If not specified (or None) the default timezone (tzlocal.get_localzone()) is used.
 
     Returns:
         datetime.datetime : A datetime.datetime object aware of the new timezone and with properly converted
@@ -256,6 +272,8 @@ def convert_aware_datetime(old_aware_datetime,timezone=tzlocal.get_localzone()):
         RunTimeError : Raised if old_aware_datetime parameter is not aware of any timezone.
         TypeError : Raised if any parameters not of an acceptable type.
     """
+    if timezone is None:
+        timezone = tzlocal.get_localzone()
     if is_naive(old_aware_datetime):
         raise RuntimeError("Datetime parameter is not timezone aware.")
     if timezone.__class__.__name__ == "str":
