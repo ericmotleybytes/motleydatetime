@@ -1,0 +1,444 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>motleydatetime package &#8212; motleydatetime 0.1.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">motleydatetime 0.1.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">motleydatetime package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="motleydatetime-package">
+<h1>motleydatetime package<a class="headerlink" href="#motleydatetime-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-motleydatetime.helpers">
+<span id="motleydatetime-helpers-module"></span><h2>motleydatetime.helpers module<a class="headerlink" href="#module-motleydatetime.helpers" title="Permalink to this headline">¶</a></h2>
+<p>Functions to make datetime and timezone manipulation easy, accurate, and reliable.</p>
+<dl class="py function">
+<dt id="motleydatetime.helpers.convert_aware_datetime">
+<code class="sig-prename descclassname">motleydatetime.helpers.</code><code class="sig-name descname">convert_aware_datetime</code><span class="sig-paren">(</span><em class="sig-param">old_aware_datetime</em>, <em class="sig-param">timezone=&lt;DstTzInfo 'America/Los_Angeles' LMT-1 day</em>, <em class="sig-param">16:07:00 STD&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#motleydatetime.helpers.convert_aware_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a timezone aware datetime into another datetime aware of another timezone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>old_aware_datetime</strong> (<em>datetime.datetime</em>) – A timezone aware datetime.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>timezone (str or datetime.tzinfo)<span class="classifier">Either a valid timezone name as a string, or a timezone object,</span></dt><dd><p>usually a pytz.timezone object, which is a subclass of datetime.tzinfo.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A datetime.datetime object aware of the new timezone and with properly converted</dt><dd><p>date and time values.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>datetime.datetime</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>RunTimeError</strong> – Raised if old_aware_datetime parameter is not aware of any timezone.</p></li>
+<li><p><strong>TypeError</strong> – Raised if any parameters not of an acceptable type.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="motleydatetime.helpers.format_datetime">
+<code class="sig-prename descclassname">motleydatetime.helpers.</code><code class="sig-name descname">format_datetime</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">the_datetime</span></em>, <em class="sig-param"><span class="n">datefmt</span><span class="o">=</span><span class="default_value">'%Y-%m-%d %H:%M:%S.%f %Z%z'</span></em>, <em class="sig-param"><span class="n">precision</span><span class="o">=</span><span class="default_value">6</span></em>, <em class="sig-param"><span class="n">nanoseconds</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#motleydatetime.helpers.format_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats datetime.datetime objects like strftime method but with flexible precision and even nanoseconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>the_datetime</strong> (<em>datetime.datetime</em>) – A datetime.datetime object.</p></li>
+<li><p><strong>datefmt</strong> (<em>str</em>) – A strftime compatible date format.</p></li>
+<li><p><strong>precision</strong> (<em>int</em>) – Desired decimal digit preceision of fractional seconds.</p></li>
+<li><p><strong>nanoseconds</strong> (<em>int</em>) – Number of nanoseconds to associate with the datatime object. This is not needed if
+the built-in microsecond precision (precision=6) of datetime is sufficient, but if greater
+precision is desired (up to nanosecond) this parameter must be specified.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A formatter date and time.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – Raised if any parameters not of an acceptable type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="motleydatetime.helpers.get_aware_datetime">
+<code class="sig-prename descclassname">motleydatetime.helpers.</code><code class="sig-name descname">get_aware_datetime</code><span class="sig-paren">(</span><em class="sig-param">year</em>, <em class="sig-param">month</em>, <em class="sig-param">day</em>, <em class="sig-param">hour=0</em>, <em class="sig-param">minute=0</em>, <em class="sig-param">second=0</em>, <em class="sig-param">microsecond=0</em>, <em class="sig-param">timezone=&lt;DstTzInfo 'America/Los_Angeles' LMT-1 day</em>, <em class="sig-param">16:07:00 STD&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#motleydatetime.helpers.get_aware_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an aware datetime.datetime object with the specified datetime and associated with specified timezone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>year</strong> (<em>int</em>) – The desired year, e.g., 2020.</p></li>
+<li><p><strong>month</strong> (<em>int</em>) – The desired month number, 1 through 12, e.g., 1 for January and 12 for December.</p></li>
+<li><p><strong>day</strong> (<em>int</em>) – The desired day of month, e.g., 25.</p></li>
+<li><p><strong>hour</strong> (<em>int</em>) – The desired hour, 0 through 23, e.g., 14 for 2 p.m.</p></li>
+<li><p><strong>minute</strong> (<em>int</em>) – The desired minute, 0 through 59, e.g., 33.</p></li>
+<li><p><strong>second</strong> (<em>int</em>) – The desired second, 0 through 59, e.g., 45. Leap seconds generally ignored.</p></li>
+<li><p><strong>microsecond</strong> (<em>int</em>) – The desired microsecond, 0 through 999999, e.g., 123456.</p></li>
+<li><p><strong>timezone</strong> (<em>str</em><em> or </em><em>datetime.tzinfo</em>) – Either a valid timezone name as a string, or a timezone object,
+usually a pytz.timezone object which is a child class of datetime.tzinfo.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>An aware datetime.datetime object associated with timezone UTC and with the specified</dt><dd><p>date and time values.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>datetime.datetime</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – Raised if any parameters not of an acceptable type.</p></li>
+<li><p><strong>ValueError</strong> – Raised if any values outside of valid ranges.</p></li>
+<li><p><strong>pytz.exceptions.UnknownTimeZoneError</strong> – Raised is a string timezone name is not recognized.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="motleydatetime.helpers.get_aware_datetime_from_epoch">
+<code class="sig-prename descclassname">motleydatetime.helpers.</code><code class="sig-name descname">get_aware_datetime_from_epoch</code><span class="sig-paren">(</span><em class="sig-param">epoch=1592634353.9949965</em>, <em class="sig-param">timezone=&lt;DstTzInfo 'America/Los_Angeles' LMT-1 day</em>, <em class="sig-param">16:07:00 STD&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#motleydatetime.helpers.get_aware_datetime_from_epoch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a datetime.datetime set from the epoch seconds and aware of specified timezone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epoch</strong> (<em>float</em>) – Number of seconds (including fractions) since system epoch. Can also be an int.</p></li>
+<li><p><strong>timezone</strong> (<em>str</em><em> or </em><em>datetime.tzinfo</em>) – Either a valid timezone name as a string, or a timezone object,
+usually a pytz.timezone object, which is a subclass of datetime.tzinfo.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>An aware datetime.datetime object associated with specified timezone and with the</dt><dd><p>equivalent datetime values.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>datetime.datetime</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – Raised if any parameters not of an acceptable type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="motleydatetime.helpers.get_aware_datetime_from_naive">
+<code class="sig-prename descclassname">motleydatetime.helpers.</code><code class="sig-name descname">get_aware_datetime_from_naive</code><span class="sig-paren">(</span><em class="sig-param">naive_datetime</em>, <em class="sig-param">timezone=&lt;DstTzInfo 'America/Los_Angeles' LMT-1 day</em>, <em class="sig-param">16:07:00 STD&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#motleydatetime.helpers.get_aware_datetime_from_naive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a localized (made timezone aware) datetime.datetime but does not convert any date or time values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>naive_datetime</strong> (<em>datetime.datetime</em>) – A naive datetime.datetime object (not internally associated with
+any timezone).</p></li>
+<li><p><strong>timezone</strong> (<em>str</em><em> or </em><em>datetime.tzinfo</em>) – Either a valid timezone name as a string, or a timezone object,
+usually a pytz.timezone object, which is a subclass of datetime.tzinfo.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A datetime.datetime object aware of the specified timezone.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>datetime.datetime</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – Raised if any parameters not of an acceptable type.</p></li>
+<li><p><strong>RunTimeError</strong> – Raised if naive_datetime parameter not naive but is rather timezone aware.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="motleydatetime.helpers.get_epoch_from_aware_datetime">
+<code class="sig-prename descclassname">motleydatetime.helpers.</code><code class="sig-name descname">get_epoch_from_aware_datetime</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">aware_datetime</span></em><span class="sig-paren">)</span><a class="headerlink" href="#motleydatetime.helpers.get_epoch_from_aware_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns number of seconds (including fractions) from the epoch base instant to aware_datetime instant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>aware_datetime</strong> (<em>datetime.datetime</em>) – A timezone aware datetime.datetime object.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>An aware datetime.datetime object associated with timezone UTC and with the</dt><dd><p>specified date and time values.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>datetime.datetime</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – Raised if any parameters not of an acceptable type.</p></li>
+<li><p><strong>RunTimeError</strong> – Raised if paraneter aware_datetime is naive, not aware.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="motleydatetime.helpers.get_naive_datetime">
+<code class="sig-prename descclassname">motleydatetime.helpers.</code><code class="sig-name descname">get_naive_datetime</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">old_aware_datetime</span></em><span class="sig-paren">)</span><a class="headerlink" href="#motleydatetime.helpers.get_naive_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a timezone aware datetime into a naive datetime with same date and time values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>old_aware_datetime</strong> (<em>datetime.datetime</em>) – Preferably a timezone aware datetime, but might
+redundantly also be a naive datetime.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A datetime.datetime object not aware (naive) of any timezone and with the same</dt><dd><p>date and time values.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>datetime.datetime</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – Raised if any parameters not of an acceptable type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="motleydatetime.helpers.get_now_aware_datetime">
+<code class="sig-prename descclassname">motleydatetime.helpers.</code><code class="sig-name descname">get_now_aware_datetime</code><span class="sig-paren">(</span><em class="sig-param">timezone=&lt;DstTzInfo 'America/Los_Angeles' LMT-1 day</em>, <em class="sig-param">16:07:00 STD&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#motleydatetime.helpers.get_now_aware_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a timezone aware datetime of the current date and time in the specified timezone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>timezone</strong> (<em>str</em><em> or </em><em>datetime.tzinfo</em>) – Either a valid timezone name as a string, or a timezone object,</p></li>
+<li><p><strong>a pytz.timezone object</strong><strong>, </strong><strong>which is a subclass of datetime.tzinfo.</strong> (<em>usually</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A datetime.datetime object with current datetime in the specified timezone.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>datetime.datetime</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – Raised if any parameters not of an acceptable type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="motleydatetime.helpers.get_utc_datetime">
+<code class="sig-prename descclassname">motleydatetime.helpers.</code><code class="sig-name descname">get_utc_datetime</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">year</span></em>, <em class="sig-param"><span class="n">month</span></em>, <em class="sig-param"><span class="n">day</span></em>, <em class="sig-param"><span class="n">hour</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">minute</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">second</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">microsecond</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#motleydatetime.helpers.get_utc_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an aware datetime.datetime object with the specified datetime and associated with UTC timezone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>year</strong> (<em>int</em>) – The desired year, e.g., 2020.</p></li>
+<li><p><strong>month</strong> (<em>int</em>) – The desired month number, 1 through 12, e.g., 1 for January and 12 for December.</p></li>
+<li><p><strong>day</strong> (<em>int</em>) – The desired day of month, e.g., 25.</p></li>
+<li><p><strong>hour</strong> (<em>int</em>) – The desired hour, 0 through 23, e.g., 14 for 2 p.m.</p></li>
+<li><p><strong>minute</strong> (<em>int</em>) – The desired minute, 0 through 59, e.g., 33.</p></li>
+<li><p><strong>second</strong> (<em>int</em>) – The desired second, 0 through 59, e.g., 45. Leap seconds generally ignored.</p></li>
+<li><p><strong>microsecond</strong> (<em>int</em>) – The desired microsecond, 0 through 999999, e.g., 123456.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>An aware datetime.datetime object associated with timezone UTC and with the specified</dt><dd><p>date and time values.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>datetime.datetime</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – Raised if any parameters not of an acceptable type.</p></li>
+<li><p><strong>ValueError</strong> – Raised if any values outside of valid ranges.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="motleydatetime.helpers.get_utc_datetime_from_epoch">
+<code class="sig-prename descclassname">motleydatetime.helpers.</code><code class="sig-name descname">get_utc_datetime_from_epoch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epoch</span><span class="o">=</span><span class="default_value">1592634353.9949965</span></em><span class="sig-paren">)</span><a class="headerlink" href="#motleydatetime.helpers.get_utc_datetime_from_epoch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a UTC timezone aware datetime.datetime set from the epoch seconds (including fractions).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>epoch</strong> (<em>float</em>) – Number of seconds (including fractions) since system epoch. Can also be an int.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>An aware datetime.datetime object associated with timezone UTC and with the</dt><dd><p>equivalent date and time values.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>datetime.datetime</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – Raised if any parameters not of an acceptable type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="motleydatetime.helpers.is_aware">
+<code class="sig-prename descclassname">motleydatetime.helpers.</code><code class="sig-name descname">is_aware</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">the_datetime</span></em><span class="sig-paren">)</span><a class="headerlink" href="#motleydatetime.helpers.is_aware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if a datetime.datetime object is ‘aware’, i.e., has associated timezone information.</p>
+<blockquote>
+<div><p>See also is_naive.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>the_datetime</strong> (<em>datetime.datetime</em>) – The datetime to be tested.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if the_datetime has timezone information, False if it does not.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – Raised if the_datetime parameter is not an instance of datetime.datetime.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="motleydatetime.helpers.is_naive">
+<code class="sig-prename descclassname">motleydatetime.helpers.</code><code class="sig-name descname">is_naive</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">the_datetime</span></em><span class="sig-paren">)</span><a class="headerlink" href="#motleydatetime.helpers.is_naive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if a datetime.datetime object is ‘naive’, i.e., has no associated timezone information.</p>
+<blockquote>
+<div><p>See also is_aware.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>the_datetime</strong> (<em>datetime.datetime</em>) – The datetime to be tested.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>False if the_datetime has timezone information, True if it does not.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – Raised if the_datetime parameter is not an instance of datetime.datetime.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-motleydatetime">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-motleydatetime" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">motleydatetime package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-motleydatetime.helpers">motleydatetime.helpers module</a></li>
+<li><a class="reference internal" href="#module-motleydatetime">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/motleydatetime.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">motleydatetime 0.1.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">motleydatetime package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Eric Christiansen.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+    </div>
+  </body>
+</html>

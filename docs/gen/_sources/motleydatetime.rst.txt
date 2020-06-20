@@ -1,0 +1,22 @@
+motleydatetime package
+======================
+
+Submodules
+----------
+
+motleydatetime.helpers module
+-----------------------------
+
+.. automodule:: motleydatetime.helpers
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: motleydatetime
+   :members:
+   :undoc-members:
+   :show-inheritance:
