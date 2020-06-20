@@ -87,8 +87,8 @@ def get_utc_datetime(year,month,day,hour=0,minute=0,second=0,microsecond=0):
     dt_utc = tz_utc.localize(datetime.datetime(year,month,day,hour,minute,second,microsecond))
     return dt_utc
 
-def get_aware_datetime(year,month,day,hour=0,minute=0,second=0,microsecond=0,timezone=tzlocal.get_localzone()):
-    """Returns an aware datetime.datetime object with the specified datetime and associated with specified timezone.
+def get_aware_datetime(year,month,day,hour=0,minute=0,second=0,microsecond=0,timezone=None):
+    """Returns an aware datetime.datetime object with the specified datetime and associated timezone.
 
     Parameters:
         year (int) : The desired year, e.g., 2020.
@@ -100,6 +100,7 @@ def get_aware_datetime(year,month,day,hour=0,minute=0,second=0,microsecond=0,tim
         microsecond (int) : The desired microsecond, 0 through 999999, e.g., 123456.
         timezone (str or datetime.tzinfo) : Either a valid timezone name as a string, or a timezone object,
             usually a pytz.timezone object which is a child class of datetime.tzinfo.
+            If not specified (or None) the default timezone (tzlocal.get_localzone()) is used.
 
     Returns:
         datetime.datetime : An aware datetime.datetime object associated with timezone UTC and with the specified
@@ -110,6 +111,8 @@ def get_aware_datetime(year,month,day,hour=0,minute=0,second=0,microsecond=0,tim
         ValueError : Raised if any values outside of valid ranges.
         pytz.exceptions.UnknownTimeZoneError : Raised is a string timezone name is not recognized.
     """
+    if timezone is None:
+        timezone = tzlocal.get_localzone()
     if not isinstance(year,int):
         raise TypeError("Parameter year is not an int.")
     if not isinstance(month,int):
