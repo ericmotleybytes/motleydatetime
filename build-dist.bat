@@ -5,7 +5,8 @@ pushd %thisfile%
 if exist .\dist  rmdir /s/q dist
 if exist .\build rmdir /s/q build
 @echo on
-python setup bdist_wheel
+python setup.py sdist
+rem python setup.py bdist_wheel
 @echo off
 popd
 echo build-dist.bat done.

@@ -13,7 +13,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='motleydatetime',
-    version='0.1.0',
+    version='0.1.1',
     packages=['motleydatetime'],
     package_dir={'': 'src'},
     url='https://github.com/ericmotleybytes/motleydatetime',
@@ -25,7 +25,7 @@ setup(
     long_description_content_type='text/markdown',
     classifiers=[
         'Development Status :: 4 - Beta',
-        'Topic :: Software Development',
+        'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
