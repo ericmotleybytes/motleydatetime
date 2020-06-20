@@ -41,7 +41,8 @@ setup(
         'tzlocal>=2.1'
     ],
     project_urls={
-        'Bug Reports' : 'https://github.com/ericmotleybytes/motleydatetime/issues',
-        'Source'      : 'https://github.com/ericmotleybytes/motleydatetime'
+        'Documentation' : 'https://ericmotleybytes.github.io/motleydatetime/',
+        'Bug Reports'   : 'https://github.com/ericmotleybytes/motleydatetime/issues',
+        'Source'        : 'https://github.com/ericmotleybytes/motleydatetime'
     }
 )
