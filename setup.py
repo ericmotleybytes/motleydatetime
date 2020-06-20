@@ -42,6 +42,7 @@ setup(
     ],
     project_urls={
         'Documentation' : 'https://ericmotleybytes.github.io/motleydatetime/',
+        'PyPI Page'     : 'https://pypi.org/project/motleydatetime/',
         'Bug Reports'   : 'https://github.com/ericmotleybytes/motleydatetime/issues',
         'Source'        : 'https://github.com/ericmotleybytes/motleydatetime'
     }

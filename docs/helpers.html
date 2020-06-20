@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>helpers.py</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>helpers.py</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      <p>Functions to make datetime and timezone manipulation easy, accurate, and reliable.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pytz</span>
+<span class="kn">import</span> <span class="nn">tzlocal</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.1.1&#39;</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <p>Tests if a datetime.datetime object is &lsquo;naive&rsquo;, i.e., has no associated timezone information.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">is_naive</span><span class="p">(</span><span class="n">the_datetime</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      <p>See also is_aware.</p>
+<p>Parameters:
+    the_datetime (datetime.datetime) : The datetime to be tested.</p>
+<p>Returns:
+    bool : False if the_datetime has timezone information, True if it does not.</p>
+<p>Raises:
+    TypeError: Raised if the_datetime parameter is not an instance of datetime.datetime.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">the_datetime</span><span class="p">,</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter the_datetime is not an instance of datetime.datetime.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">the_datetime</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      <p>Tests if a datetime.datetime object is &lsquo;aware&rsquo;, i.e., has associated timezone information.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">is_aware</span><span class="p">(</span><span class="n">the_datetime</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <p>See also is_naive.</p>
+<p>Parameters:
+    the_datetime (datetime.datetime) : The datetime to be tested.</p>
+<p>Returns:
+    bool : True if the_datetime has timezone information, False if it does not.</p>
+<p>Raises:
+    TypeError : Raised if the_datetime parameter is not an instance of datetime.datetime.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">the_datetime</span><span class="p">,</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter the_datetime is not an instance of datetime.datetime.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">the_datetime</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      <p>Returns an aware datetime.datetime object with the specified datetime and associated with UTC timezone.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_utc_datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">hour</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>Parameters:
+    year (int) : The desired year, e.g., 2020.
+    month (int) : The desired month number, 1 through 12, e.g., 1 for January and 12 for December.
+    day (int) : The desired day of month, e.g., 25.
+    hour (int) : The desired hour, 0 through 23, e.g., 14 for 2 p.m.
+    minute (int) : The desired minute, 0 through 59, e.g., 33.
+    second (int) : The desired second, 0 through 59, e.g., 45. Leap seconds generally ignored.
+    microsecond (int) : The desired microsecond, 0 through 999999, e.g., 123456.</p>
+<p>Returns:
+    datetime.datetime : An aware datetime.datetime object associated with timezone UTC and with the specified
+        date and time values.</p>
+<p>Raises:
+    TypeError : Raised if any parameters not of an acceptable type.
+    ValueError : Raised if any values outside of valid ranges.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter year is not an int.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">month</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter month is not an int.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">day</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter day is not an int.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hour</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter hour is not an int.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">minute</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter minute is not an int.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">second</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter second is not an int.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">microsecond</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter microsecond is not an int.&quot;</span><span class="p">)</span>
+    <span class="n">tz_utc</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">utc</span>
+    <span class="n">dt_utc</span> <span class="o">=</span> <span class="n">tz_utc</span><span class="o">.</span><span class="n">localize</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">hour</span><span class="p">,</span><span class="n">minute</span><span class="p">,</span><span class="n">second</span><span class="p">,</span><span class="n">microsecond</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">dt_utc</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      <p>Returns an aware datetime.datetime object with the specified datetime and associated with specified timezone.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_aware_datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">hour</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">timezone</span><span class="o">=</span><span class="n">tzlocal</span><span class="o">.</span><span class="n">get_localzone</span><span class="p">()):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      <p>Parameters:
+year (int) : The desired year, e.g., 2020.
+month (int) : The desired month number, 1 through 12, e.g., 1 for January and 12 for December.
+day (int) : The desired day of month, e.g., 25.
+hour (int) : The desired hour, 0 through 23, e.g., 14 for 2 p.m.
+minute (int) : The desired minute, 0 through 59, e.g., 33.
+second (int) : The desired second, 0 through 59, e.g., 45. Leap seconds generally ignored.
+microsecond (int) : The desired microsecond, 0 through 999999, e.g., 123456.
+timezone (str or datetime.tzinfo) : Either a valid timezone name as a string, or a timezone object,
+    usually a pytz.timezone object which is a child class of datetime.tzinfo.</p>
+<p>Returns:
+    datetime.datetime : An aware datetime.datetime object associated with timezone UTC and with the specified
+        date and time values.</p>
+<p>Raises:
+    TypeError : Raised if any parameters not of an acceptable type.
+    ValueError : Raised if any values outside of valid ranges.
+    pytz.exceptions.UnknownTimeZoneError : Raised is a string timezone name is not recognized.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter year is not an int.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">month</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter month is not an int.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">day</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter day is not an int.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hour</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter hour is not an int.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">minute</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter minute is not an int.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">second</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter second is not an int.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">microsecond</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter microsecond is not an int.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">timezone</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;str&quot;</span><span class="p">:</span>
+        <span class="n">timezone</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="n">timezone</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">timezone</span><span class="p">,</span><span class="n">datetime</span><span class="o">.</span><span class="n">tzinfo</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter timezone is not a timezone name or an instance of datetime.tzinfo.&quot;</span><span class="p">)</span>
+    <span class="n">aware_dt</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">localize</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">hour</span><span class="p">,</span><span class="n">minute</span><span class="p">,</span><span class="n">second</span><span class="p">,</span><span class="n">microsecond</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">aware_dt</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      <p>Returns number of seconds (including fractions) from the epoch base instant to aware_datetime instant.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_epoch_from_aware_datetime</span><span class="p">(</span><span class="n">aware_datetime</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      <p>Parameters:
+    aware_datetime (datetime.datetime) : A timezone aware datetime.datetime object.</p>
+<p>Returns:
+    datetime.datetime : An aware datetime.datetime object associated with timezone UTC and with the
+        specified date and time values.</p>
+<p>Raises:
+    TypeError : Raised if any parameters not of an acceptable type.
+    RunTimeError : Raised if paraneter aware_datetime is naive, not aware.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">if</span> <span class="n">is_naive</span><span class="p">(</span><span class="n">aware_datetime</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Datetime parameter is not timezone aware.&quot;</span><span class="p">)</span>
+    <span class="n">base_epoch</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">pytz</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+    <span class="n">dt_epoch</span> <span class="o">=</span> <span class="p">(</span><span class="n">aware_datetime</span> <span class="o">-</span> <span class="n">base_epoch</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>   <span class="c1"># fractional seconds</span>
+    <span class="k">return</span> <span class="n">dt_epoch</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      <p>Returns a UTC timezone aware datetime.datetime set from the epoch seconds (including fractions).</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_utc_datetime_from_epoch</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-12'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-12'>#</a>
+      </div>
+      <p>Parameters:
+    epoch (float) : Number of seconds (including fractions) since system epoch. Can also be an int.</p>
+<p>Returns:
+    datetime.datetime : An aware datetime.datetime object associated with timezone UTC and with the
+        equivalent date and time values.</p>
+<p>Raises:
+    TypeError : Raised if any parameters not of an acceptable type.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span><span class="nb">float</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Epoch parameter is not an int or a float.&quot;</span><span class="p">)</span>
+    <span class="n">aware_dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span><span class="n">pytz</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">aware_dt</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-13'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-13'>#</a>
+      </div>
+      <p>Returns a datetime.datetime set from the epoch seconds and aware of specified timezone.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_aware_datetime_from_epoch</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span><span class="n">timezone</span><span class="o">=</span><span class="n">tzlocal</span><span class="o">.</span><span class="n">get_localzone</span><span class="p">()):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-14'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-14'>#</a>
+      </div>
+      <p>Parameters:
+    epoch (float) : Number of seconds (including fractions) since system epoch. Can also be an int.
+    timezone (str or datetime.tzinfo) : Either a valid timezone name as a string, or a timezone object,
+        usually a pytz.timezone object, which is a subclass of datetime.tzinfo.</p>
+<p>Returns:
+    datetime.datetime : An aware datetime.datetime object associated with specified timezone and with the
+        equivalent datetime values.</p>
+<p>Raises:
+    TypeError : Raised if any parameters not of an acceptable type.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span><span class="nb">float</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Epoch parameter is an int or a float.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">timezone</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;str&quot;</span><span class="p">:</span>
+        <span class="n">timezone</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="n">timezone</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">timezone</span><span class="p">,</span><span class="n">datetime</span><span class="o">.</span><span class="n">tzinfo</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter timezone is not a timezone name or an instance of datetime.tzinfo.&quot;</span><span class="p">)</span>
+    <span class="n">aware_dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span><span class="n">timezone</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">aware_dt</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-15'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-15'>#</a>
+      </div>
+      <p>Returns a localized (made timezone aware) datetime.datetime but does not convert any date or time values.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_aware_datetime_from_naive</span><span class="p">(</span><span class="n">naive_datetime</span><span class="p">,</span><span class="n">timezone</span><span class="o">=</span><span class="n">tzlocal</span><span class="o">.</span><span class="n">get_localzone</span><span class="p">()):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-16'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-16'>#</a>
+      </div>
+      <p>Parameters:
+    naive_datetime (datetime.datetime) : A naive datetime.datetime object (not internally associated with
+        any timezone).
+    timezone (str or datetime.tzinfo) : Either a valid timezone name as a string, or a timezone object,
+        usually a pytz.timezone object, which is a subclass of datetime.tzinfo.</p>
+<p>Returns:
+    datetime.datetime : A datetime.datetime object aware of the specified timezone.</p>
+<p>Raises:
+    TypeError : Raised if any parameters not of an acceptable type.
+    RunTimeError : Raised if naive_datetime parameter not naive but is rather timezone aware.</p>
+<p>Localized naive datetime, but no timezone conversion performed.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">if</span> <span class="n">is_aware</span><span class="p">(</span><span class="n">naive_datetime</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Naive datetime parameter is not naive.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">timezone</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;str&quot;</span><span class="p">:</span>
+        <span class="n">timezone</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="n">timezone</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">timezone</span><span class="p">,</span><span class="n">datetime</span><span class="o">.</span><span class="n">tzinfo</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter timezone is not a timezone name or an instance of datetime.tzinfo.&quot;</span><span class="p">)</span>
+    <span class="n">aware_dt</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">localize</span><span class="p">(</span><span class="n">naive_datetime</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">aware_dt</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-17'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-17'>#</a>
+      </div>
+      <p>Returns a timezone aware datetime of the current date and time in the specified timezone.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_now_aware_datetime</span><span class="p">(</span><span class="n">timezone</span><span class="o">=</span><span class="n">tzlocal</span><span class="o">.</span><span class="n">get_localzone</span><span class="p">()):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-18'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-18'>#</a>
+      </div>
+      <p>Parameters:
+    timezone (str or datetime.tzinfo) : Either a valid timezone name as a string, or a timezone object,
+    usually a pytz.timezone object, which is a subclass of datetime.tzinfo.</p>
+<p>Returns:
+    datetime.datetime : A datetime.datetime object with current datetime in the specified timezone.</p>
+<p>Raises:
+    TypeError : Raised if any parameters not of an acceptable type.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">if</span> <span class="n">timezone</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;str&quot;</span><span class="p">:</span>
+        <span class="n">timezone</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="n">timezone</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">timezone</span><span class="p">,</span><span class="n">datetime</span><span class="o">.</span><span class="n">tzinfo</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter timezone is not a timezone name or an instance of datetime.tzinfo.&quot;</span><span class="p">)</span>
+    <span class="n">epoch</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">aware_dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span><span class="n">timezone</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">aware_dt</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-19'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-19'>#</a>
+      </div>
+      <p>Converts a timezone aware datetime into another datetime aware of another timezone.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">convert_aware_datetime</span><span class="p">(</span><span class="n">old_aware_datetime</span><span class="p">,</span><span class="n">timezone</span><span class="o">=</span><span class="n">tzlocal</span><span class="o">.</span><span class="n">get_localzone</span><span class="p">()):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-20'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-20'>#</a>
+      </div>
+      <p>Parameters:
+    old_aware_datetime (datetime.datetime) : A timezone aware datetime.
+timezone (str or datetime.tzinfo) : Either a valid timezone name as a string, or a timezone object,
+    usually a pytz.timezone object, which is a subclass of datetime.tzinfo.</p>
+<p>Returns:
+    datetime.datetime : A datetime.datetime object aware of the new timezone and with properly converted
+        date and time values.</p>
+<p>Raises:
+    RunTimeError : Raised if old_aware_datetime parameter is not aware of any timezone.
+    TypeError : Raised if any parameters not of an acceptable type.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">if</span> <span class="n">is_naive</span><span class="p">(</span><span class="n">old_aware_datetime</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Datetime parameter is not timezone aware.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">timezone</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;str&quot;</span><span class="p">:</span>
+        <span class="n">timezone</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="n">timezone</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">timezone</span><span class="p">,</span><span class="n">datetime</span><span class="o">.</span><span class="n">tzinfo</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter timezone is not a timezone name or an instance of datetime.tzinfo.&quot;</span><span class="p">)</span>
+    <span class="n">new_aware_datetime</span> <span class="o">=</span> <span class="n">old_aware_datetime</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_aware_datetime</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-21'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-21'>#</a>
+      </div>
+      <p>Converts a timezone aware datetime into a naive datetime with same date and time values.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">get_naive_datetime</span><span class="p">(</span><span class="n">old_aware_datetime</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-22'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-22'>#</a>
+      </div>
+      <p>Parameters:
+    old_aware_datetime (datetime.datetime) : Preferably a timezone aware datetime, but might
+        redundantly also be a naive datetime.</p>
+<p>Returns:
+    datetime.datetime : A datetime.datetime object not aware (naive) of any timezone and with the same
+        date and time values.</p>
+<p>Raises:
+    TypeError : Raised if any parameters not of an acceptable type.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">old_aware_datetime</span><span class="p">,</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter old_aware_datetime is not an instance of datetime.datetime.&quot;</span><span class="p">)</span>
+    <span class="n">new_naive_datetime</span> <span class="o">=</span> <span class="n">old_aware_datetime</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_naive_datetime</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-23'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-23'>#</a>
+      </div>
+      <p>Formats datetime.datetime objects like strftime method but with flexible precision and even nanoseconds.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">format_datetime</span><span class="p">(</span><span class="n">the_datetime</span><span class="p">,</span> <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S.</span><span class="si">%f</span><span class="s1"> %Z%z&#39;</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">nanoseconds</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-24'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-24'>#</a>
+      </div>
+      <p>Parameters:
+    the_datetime (datetime.datetime) : A datetime.datetime object.
+    datefmt (str) : A strftime compatible date format.
+    precision (int) : Desired decimal digit preceision of fractional seconds.
+    nanoseconds (int) : Number of nanoseconds to associate with the datatime object. This is not needed if
+        the built-in microsecond precision (precision=6) of datetime is sufficient, but if greater
+        precision is desired (up to nanosecond) this parameter must be specified.</p>
+<p>Returns:
+    str : A formatter date and time.</p>
+<p>Raises:
+    TypeError : Raised if any parameters not of an acceptable type.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">the_datetime</span><span class="p">,</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Parameter the_datetime is not an instance of datetime.datetime.&quot;</span><span class="p">)</span>
+    <span class="n">precision</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">int</span><span class="p">(</span><span class="n">precision</span><span class="p">)))</span>
+    <span class="n">microseconds</span> <span class="o">=</span> <span class="n">the_datetime</span><span class="o">.</span><span class="n">microsecond</span>
+    <span class="k">if</span> <span class="n">microseconds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">microseconds</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">nanoseconds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nanoseconds</span> <span class="o">=</span> <span class="n">microseconds</span> <span class="o">*</span> <span class="mi">1000</span>  <span class="c1"># use nanoseconds by extending datetime microseconds</span>
+    <span class="k">if</span> <span class="n">datefmt</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%09d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">nanoseconds</span> <span class="c1"># format with leading zeros</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">precision</span><span class="p">]</span>
+        <span class="n">datefmt</span> <span class="o">=</span> <span class="n">datefmt</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">digits</span><span class="p">)</span>
+    <span class="n">formatted_datetime</span> <span class="o">=</span> <span class="n">the_datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datefmt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">formatted_datetime</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>
