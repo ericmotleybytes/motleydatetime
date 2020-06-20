@@ -10,7 +10,7 @@ __version__ = '0.1.1'
 def is_naive(the_datetime):
     """Tests if a datetime.datetime object is 'naive', i.e., has no associated timezone information.
 
-    See also is_aware.
+        See also is_aware.
 
     Parameters:
         the_datetime (datetime.datetime) : The datetime to be tested.
@@ -31,7 +31,7 @@ def is_naive(the_datetime):
 def is_aware(the_datetime):
     """Tests if a datetime.datetime object is 'aware', i.e., has associated timezone information.
 
-    See also is_naive.
+        See also is_naive.
 
     Parameters:
         the_datetime (datetime.datetime) : The datetime to be tested.

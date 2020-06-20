@@ -1,0 +1,8 @@
+Developer notes for motleydatetime:
+
+Tool notes:
+    Extra build-time development tools used before package distribution, but not by run-time users, include:
+        Twine: (Used to gnerate PyPI distibutions)
+            $ pip install twine
+        Sphinx: (Used to generate web documentation hosted on https://ericmotleybytes.github.io/motleydatetime/).
+            $ pip install -U sphinx
