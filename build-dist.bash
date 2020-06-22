@@ -11,4 +11,5 @@ if [ -d ./build ]; then
 fi
 python setup.py sdist
 #python setup.py bdist_wheel
-echo "INFO: build-dist.bat done."
+popd > /dev/null
+echo "INFO: build-dist.bash done."
