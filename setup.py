@@ -32,14 +32,13 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3 :: Only',
     ],
     keywords='date time datetime timezone',
-    python_requires='>=3.5, <4',
+    python_requires='>=3.6, <4',
     install_requires=[
         'pytz>=2020.1',
         'tzlocal>=2.1'
